@@ -14,22 +14,26 @@ import com.example.todolist.databinding.FragmentTaskBinding
 
 class TaskFragment : Fragment() {
     private val viewModel: TaskViewModel by viewModels()
-
+    private var _binding: FragmentTaskBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = FragmentTaskBinding.inflate(inflater)
+        _binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.apply {
-            floatingActionButton.setOnClickListener {
+            btn.setOnClickListener {
                 findNavController().navigate(R.id.action_taskFragment_to_addFragment)
             }
         }
 
-        return inflater.inflate(R.layout.fragment_task, container, false)
+        return binding.root
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
